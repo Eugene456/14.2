@@ -119,24 +119,15 @@ window.addEventListener('DOMContentLoaded', function(){
                         closeMenu();
                     };
                 };
-                target = 0;
-            }
-            
-            if (target.classList.contains('close-btn')){
+            }else if (target.classList.contains('close-btn') || !menu.contains(target)){
                 closeMenu();
-            } 
-
-            if(target.closest('li') !== null){
+            } else if(target.closest('li') !== null){
                 menuItems.forEach((item, i) => {
                    if(item === target.closest('li')){
                        closeMenu();
                         }
                 });
-            }
-            
-            if(!menu.contains(target)) {
-            	closeMenu();
-            };        
+            }  
         });
     };
     
