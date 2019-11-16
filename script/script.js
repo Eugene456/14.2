@@ -137,29 +137,67 @@ window.addEventListener('DOMContentLoaded', function(){
 
     //popup
     let togglePopUp = () => {
+        let count = 0;
+        let interval;
+        const openPopupAnim = () => {
+            interval = requestAnimationFrame(openPopupAnim);
+                if(count < 1){
+                    popup.style.opacity = count;
+                    count+= 0.03;
+                    
+                } else{
+                    cancelAnimationFrame(interval);
+                }
+        };
+
+        const closePopupAnim =() => {
+            interval = requestAnimationFrame(closePopupAnim);
+                if(count > 0){
+                    console.log(count);
+                    popup.style.opacity = count;
+                    count -= 0.03;
+                        
+                } else{
+                    cancelAnimationFrame(interval);
+                }
+        };
+
         const popup = document.querySelector('.popup'),
         popupBtn = document.querySelectorAll('.popup-btn');
+        
+        let topValue = 0;
+        
 
         popupBtn.forEach(elem => {
             elem.addEventListener('click',() => {
                 popup.style.display = 'block';
+            
+            let animeModal = setInterval (function () {
+                console.log(topValue);
+                topValue += 1;
+                popup.style.top = topValue + '%';
+                if (topValue >= 15) {clearInterval(animeModal);}
+                }, 1000);
+
                 document.body.style.overflow = '';
 
             });
         });
 
-        
+     
         
         popup.addEventListener('click', (event) => {
             let target = event.target;
             if (target.classList.contains('popup-close')){
-                popup.style.display = 'none';
+                closePopupAnim();
+               
                 document.body.style.overflow = '';
 
             }else{
                 target = target.closest('.popup-content');
                 if (!target){
-                    popup.style.display = 'none';
+                    closePopupAnim();
+                    
                     document.body.style.overflow = '';
                 }
             }
@@ -250,4 +288,6 @@ window.addEventListener('DOMContentLoaded', function(){
     
     tabs();
 });
+
+//изменение картинки по дата атрибуту
 
